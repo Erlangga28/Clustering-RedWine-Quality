@@ -9,11 +9,11 @@ from sklearn.preprocessing import StandardScaler
 
 df = pd.read_csv('winequality-red.csv')
 df.head()
-X = data.iloc[:, [5, 6]].values
+X = df.iloc[:, [5, 6]].values
 
 wcss = []
-for i in range [1, 11]:
-    kmeans = KMeans(n_cluster = i, init = 'KMeans++')
+for i in range (1, 11):
+    kmeans = KMeans(n_clusters = i, init = 'k-means++')
     kmeans.fit(X)
     wcss.append(kmeans.inertia_)
 plt.plot(range(1, 11), wcss)
