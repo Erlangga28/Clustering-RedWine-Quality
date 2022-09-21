@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 df = pd.read_csv('winequality-red.csv')
 df.head()
+print(df.head())
 X = df.iloc[:, [5, 6]].values
 
 wcss = []
@@ -21,6 +22,7 @@ plt.title('Elbow Methods Graphics')
 plt.xlabel('Cluster')
 plt.ylabel('WCSS')
 plt.show()
+
 
 
 
