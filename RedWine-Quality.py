@@ -9,13 +9,14 @@ from sklearn.preprocessing import StandardScaler
 from yellowbrick.cluster import KElbowVisualizer
 from sklearn.decomposition import PCA
 
-er = pd.read_csv('winequality-red.csv')
+er = pd.read_csv('winequality-red.csv') #read imported data
 er.head()
-print(er.head())
+print(er.head()) #to show the data
 
-pH_Chart = sns.displot(er['pH'])
+pH_Chart = sns.displot(er['pH']) #making chart of 'pH' data
 
 plt.figure(figsize = (13, 9))
+#er = er.drop('alcohol', axis = 1)
 er = er.drop('pH', axis = 1)
 er.columns
 
@@ -31,13 +32,13 @@ plt.ylabel('WCSS')
 plt.show()
 
 model = KMeans()
-visible = KElbowVisualizer(model, k=(1,10), timings = False)
+visible = KElbowVisualizer(model, k=(1,11), timings = False)
 visible.fit(er)
 visible.show()
 
 bca = PCA()
 X = bca.fit_transform(er)
-kmeans = KMeans(n_clusters=3)
+kmeans = KMeans(n_clusters=4)
 label = kmeans.fit_predict(X)
 graphics = np.unique(label)
 
@@ -48,5 +49,5 @@ plt.legend()
 plt.title('Wine After Drop pH')
 plt.show()
 
-
-
+#Erlangga Wahyu Utomo
+#5025201118
