@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import datetime as dt
 import sklearn
 import matplotlib.pyplot as plt
+import scipy.cluster.hierarchy as shc
 from matplotlib.pyplot import figure
 from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, normalize
 from yellowbrick.cluster import KElbowVisualizer
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage,dendrogram
@@ -52,11 +52,15 @@ plt.legend()
 plt.title('Wine After Drop pH')
 plt.show()
 
+scl= normalize(er)
+scl= pd.DataFrame(scl, columns=er.columns)
+scl.head()
+print(scl.head())
+
 #Making the Dendrogam Graf
 plt.figure(figsize= (8, 4))
-Coalition = linkage(er,method='ward')
-dendrogram(Coalition)
-plt.axhline(y=1000, color='r', linestyle='--')
+Coalition = shc.dendrogram(shc.linkage(scl, method='average'))
+plt.axhline(y=0.467, color='b', linestyle='--')
 plt.show()
 
 cl = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='average')
@@ -64,9 +68,8 @@ cl.fit_predict(er)
 print(cl.fit_predict(er))
 
 plt.figure(figsize= (8, 4))
-Coalition = linkage(er,method='complete')
-dendrogram(Coalition)
-plt.axhline(y=150, color='r', linestyle='--')
+Coalition = shc.dendrogram(shc.linkage(scl, method='complete'))
+plt.axhline(y=1, color='b', linestyle='--')
 plt.show()
 
 cl = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='complete')
@@ -74,13 +77,13 @@ cl.fit_predict(er)
 print(cl.fit_predict(er))
 
 plt.figure(figsize= (8, 4))
-Coalition = linkage(er,method='single')
-dendrogram(Coalition)
-plt.axhline(y=50, color='r', linestyle='--')
+Coalition = shc.dendrogram(shc.linkage(scl, method='single'))
+plt.axhline(y=0.018, color='b', linestyle='--')
 plt.show()
 
 cl = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='single')
 cl.fit_predict(er)
 print(cl.fit_predict(er))
+
 #Erlangga Wahyu Utomo
 #5025201118
