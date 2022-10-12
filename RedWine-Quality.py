@@ -11,6 +11,8 @@ from yellowbrick.cluster import KElbowVisualizer
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage,dendrogram
 from sklearn.cluster import AgglomerativeClustering
+from sklearn import datasets
+from sklearn.metrics import silhouette_score
 
 er = pd.read_csv('winequality-red.csv') #read imported data
 er.head()
@@ -38,6 +40,13 @@ model = KMeans()
 visible = KElbowVisualizer(model, k=(1,11), timings = False)
 visible.fit(er)
 visible.show()
+
+#make silhouette score
+for i in range(2,9):
+    kmeans = KMeans(n_clusters=i,max_iter=100)
+    kmeans.fit(er)
+    SilhoutteScore = silhouette_score(er, kmeans.labels_, metric='euclidean')
+    print("{} silhouette score : {}".format(i,SilhoutteScore))
 
 bca = PCA()
 X = bca.fit_transform(er)
