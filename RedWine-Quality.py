@@ -20,6 +20,11 @@ print(er.head()) #to show the data
 
 pH_Chart = sns.displot(er['pH']) #making chart of 'pH' data
 
+#make the all data with pairplot
+visualization = sns.pairplot(er)
+plt.show()
+print(visualization)
+
 plt.figure(figsize = (13, 9))
 #er = er.drop('alcohol', axis = 1)
 er = er.drop('pH', axis = 1)
@@ -42,11 +47,25 @@ visible.fit(er)
 visible.show()
 
 #make silhouette score
-for i in range(2,9):
+for i in range(2,11):
     kmeans = KMeans(n_clusters=i,max_iter=100)
     kmeans.fit(er)
     SilhoutteScore = silhouette_score(er, kmeans.labels_, metric='euclidean')
     print("{} silhouette score : {}".format(i,SilhoutteScore))
+
+#make graphic silhouette from value 2 until 11
+koefofsilhouette = []
+for i in range(2,11):
+    kmeans = KMeans(n_clusters=i, max_iter=100)
+    kmeans.fit(er)
+    SilhoutteScore = silhouette_score(er, kmeans.labels_)
+    koefofsilhouette.append(SilhoutteScore)
+
+plt.plot(range(2,11), koefofsilhouette)
+plt.xticks(range(2,11))
+plt.xlabel("number of clusters")
+plt.ylabel("Coefficient of Silhouette")
+plt.show()
 
 bca = PCA()
 X = bca.fit_transform(er)
